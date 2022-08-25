@@ -25,8 +25,19 @@ class ImageTable extends React.Component<typeImageTableProps, typeImageTableStat
   constructor(props: typeImageTableProps) {
     super(props);
     this.state = {
-      raneNum: 3
+      raneNum: window.innerWidth > 600 ? Math.floor(window.innerWidth / 300) : 2
     };
+  }
+
+  componentDidMount() {
+    let queue: NodeJS.Timeout;
+    window.addEventListener("resize", () => {
+      clearTimeout(queue);
+      queue = setTimeout(() => {
+        const raneNum = window.innerWidth > 600 ? Math.floor(window.innerWidth / 300) : 2;
+        this.setState({ raneNum: raneNum });
+      }, 500);
+    });
   }
 
   render() {
